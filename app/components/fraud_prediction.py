@@ -5,10 +5,13 @@ Fraud Prediction Component - Interactive scoring interface with scenario presets
 from pathlib import Path
 from typing import Any, Dict
 
+import numpy as np
+import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
 from src.predict import FraudPredictor
+
 
 
 def render_fraud_prediction(metadata: Dict[str, Any], active_threshold: float) -> None:
