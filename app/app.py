@@ -3,18 +3,35 @@ Fraud Detection Intelligence - Production Streamlit Web Application.
 Main entry point coordinating modular UI components.
 """
 
+import sys
 from pathlib import Path
+
+# Ensure project root directory is on Python path
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 import streamlit as st
 
-from app.components.about_model import render_about_model
-from app.components.dashboard import render_dashboard
-from app.components.data_insights import render_data_insights
-from app.components.feature_importance import render_feature_importance
-from app.components.fraud_prediction import render_fraud_prediction
-from app.components.model_performance import render_model_performance
+try:
+    from app.components.about_model import render_about_model
+    from app.components.dashboard import render_dashboard
+    from app.components.data_insights import render_data_insights
+    from app.components.feature_importance import render_feature_importance
+    from app.components.fraud_prediction import render_fraud_prediction
+    from app.components.model_performance import render_model_performance
+except ModuleNotFoundError:
+    from components.about_model import render_about_model
+    from components.dashboard import render_dashboard
+    from components.data_insights import render_data_insights
+    from components.feature_importance import render_feature_importance
+    from components.fraud_prediction import render_fraud_prediction
+    from components.model_performance import render_model_performance
+
 from src.utils import load_config, load_json, setup_logger
 
 logger = setup_logger("app")
+
 
 # Page Configuration
 st.set_page_config(
