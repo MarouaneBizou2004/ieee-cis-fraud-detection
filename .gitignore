@@ -1,0 +1,79 @@
+# ==============================================================================
+# IEEE-CIS Fraud Detection - Git Ignore Configuration
+# ==============================================================================
+
+# Raw Kaggle Data (Files exceed GitHub 100MB limit; train_transaction.csv is ~680MB uncompressed)
+data/raw/*.csv
+data/raw/*.zip
+data/raw/*.tar.gz
+data/processed/*.parquet
+data/processed/*.csv
+
+# Trained Model Binaries (Final serialized models can exceed 100MB; use MLflow/S3/DVC for model tracking)
+models/*.pkl
+models/*.joblib
+models/*.json
+models/*.bin
+!models/model_metadata.json.example
+!.gitkeep
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IDE and Editor configs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Operating System specific files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Testing & Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.tox/
+
+# Sensitive Information & Credentials
+*.env
+*.key
+*.pem
+credentials.json
+kaggle.json

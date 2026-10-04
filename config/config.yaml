@@ -1,0 +1,118 @@
+# ==============================================================================
+# IEEE-CIS Fraud Detection System Configuration
+# ==============================================================================
+
+project:
+  name: "IEEE-CIS Fraud Detection"
+  version: "1.0.0"
+  description: "End-to-End Production ML System for Financial Fraud Detection"
+  author: "Antigravity ML Engineering"
+
+paths:
+  raw_data_dir: "data/raw"
+  processed_data_dir: "data/processed"
+  train_transaction_file: "train_transaction.csv"
+  train_identity_file: "train_identity.csv"
+  test_transaction_file: "test_transaction.csv"
+  test_identity_file: "test_identity.csv"
+  models_dir: "models"
+  reports_dir: "reports"
+  figures_dir: "reports/figures"
+  model_results_file: "reports/model_results.csv"
+  final_model_file: "models/final_model.pkl"
+  preprocessor_file: "models/preprocessor.pkl"
+  metadata_file: "models/model_metadata.json"
+
+data:
+  target_col: "isFraud"
+  id_col: "TransactionID"
+  time_col: "TransactionDT"
+  split_strategy: "time_based" # 'time_based' or 'stratified'
+  val_size: 0.2
+  test_size: 0.15
+  random_state: 42
+  sample_size: null # Set integer to downsample for quick debugging (e.g. 50000)
+
+memory:
+  reduce_memory: true
+  float_dtype: "float32"
+  int_dtype: "int32"
+  convert_categories: true
+
+features:
+  drop_high_missing_thresh: 0.85
+  categorical_cardinality_threshold: 50
+  email_domains:
+    - "gmail.com"
+    - "yahoo.com"
+    - "hotmail.com"
+    - "anonymous.com"
+    - "aol.com"
+    - "comcast.net"
+    - "icloud.com"
+    - "outlook.com"
+  aggregation_groups:
+    - group_col: "card1"
+      target_col: "TransactionAmt"
+      aggregations: ["mean", "std"]
+    - group_col: "card4"
+      target_col: "TransactionAmt"
+      aggregations: ["mean", "std"]
+
+imbalance:
+  strategy: "class_weight" # "class_weight", "smote", "undersample", "none"
+  smote_sampling_strategy: 0.25 # ratio for SMOTE on training fold only
+  random_state: 42
+
+models:
+  baseline: "logistic_regression"
+  train_models:
+    - "logistic_regression"
+    - "decision_tree"
+    - "random_forest"
+    - "hist_gradient_boosting"
+    - "lightgbm"
+    - "xgboost"
+    - "knn"
+    - "svm"
+  subsample_heavy_models_size: 30000 # KNN and SVM subsample cap for computational feasibility
+
+hyperparameters:
+  xgboost:
+    n_estimators: 300
+    max_depth: 6
+    learning_rate: 0.05
+    subsample: 0.8
+    colsample_bytree: 0.8
+    min_child_weight: 3
+    scale_pos_weight: 10
+    eval_metric: "aucpr"
+  lightgbm:
+    n_estimators: 300
+    learning_rate: 0.05
+    num_leaves: 63
+    max_depth: -1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    scale_pos_weight: 10
+    objective: "binary"
+  random_forest:
+    n_estimators: 150
+    max_depth: 12
+    min_samples_split: 10
+    min_samples_leaf: 4
+    class_weight: "balanced"
+    n_jobs: -1
+
+evaluation:
+  primary_metric: "pr_auc"
+  default_threshold: 0.35
+  threshold_sweep_start: 0.05
+  threshold_sweep_end: 0.95
+  threshold_sweep_steps: 91
+
+business_cost_matrix:
+  cost_false_negative: 500.0  # Average dollar loss per undetected fraud
+  cost_false_positive: 15.0   # Operational cost to investigate false alarm & customer friction
+  cost_true_positive: 15.0    # Operational review cost to confirm fraud
+  cost_true_negative: 0.0     # Seamless legitimate purchase
