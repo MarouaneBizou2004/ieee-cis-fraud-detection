@@ -269,12 +269,12 @@ Using **SHAP (SHapley Additive exPlanations)**, the system provides transparent 
 
 The interactive web application includes 6 specialized modules:
 
-- 🏠 **Dashboard**: High-level KPI cards (Total Transactions, Fraud Rate, Model PR-AUC, Catch Rate).
-- 📈 **Model Performance**: Interactive leaderboard and dynamic threshold simulator with live confusion matrix.
-- 🔍 **Fraud Prediction**: Live scoring interface with quick scenario presets (e.g. Standard Retail, Suspicious Wire, Mismatched Email).
-- 🧠 **Feature Importance**: Global SHAP importance rankings and plain-English business glossary.
-- 📊 **Data Insights**: Interactive Plotly charts for EDA, hourly curves, and card distributions.
-- ℹ️ **About Model**: Business problem background, financial loss equations, and architecture diagrams.
+-  **Dashboard**: High-level KPI cards (Total Transactions, Fraud Rate, Model PR-AUC, Catch Rate).
+-  **Model Performance**: Interactive leaderboard and dynamic threshold simulator with live confusion matrix.
+-  **Fraud Prediction**: Live scoring interface with quick scenario presets (e.g. Standard Retail, Suspicious Wire, Mismatched Email).
+-  **Feature Importance**: Global SHAP importance rankings and plain-English business glossary.
+-  **Data Insights**: Interactive Plotly charts for EDA, hourly curves, and card distributions.
+-  **About Model**: Business problem background, financial loss equations, and architecture diagrams.
 
 ---
 
